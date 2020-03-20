@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Architecture</title>    
+        <!-- Plugins CSS -->
+        <link href="/css/plugins/plugins.css" rel="stylesheet">
+        <link href="/linearicons/fonts.css" rel="stylesheet">
+        <link rel="stylesheet" href="/masterslider/style/masterslider.css" />
+        <link rel="stylesheet" href="/css/master-slider-custom.css" />
+        <!-- load css for cubeportfolio -->
+        <link rel="stylesheet" type="text/css" href="/cubeportfolio/css/cubeportfolio.min.css">
+        <link href="/css/style.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="app"></div>
+        <!-- jQuery first, then Tether, then Bootstrap JS. -->
+        <script type="text/javascript" src="js/plugins/plugins.js"></script> 
+        <script type="text/javascript" src="js/archi.custom.js"></script> 
+        <script type="text/javascript" src="masterslider/masterslider.min.js"></script> 
+        <script type="text/javascript" src="js/master-slider-home.js"></script> 
+        <!-- load cubeportfolio -->
+        <script type="text/javascript" src="cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
+        <script type="text/javascript" src="js/portfolio-2col-custom.js"></script> 
+    </body>
 </html>
