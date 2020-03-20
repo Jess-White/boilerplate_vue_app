@@ -12,28 +12,24 @@
         <h4 class="text-center">Organization: {{grant.organization_id}}</h4>
        </div>
 
-       <div class=>
-
-        <ul>
-          <li class="text-center">{{section.category}}
-            <textarea 
-              class="card-text" 
-              v-for="section in grant.sections"
-              col="40" 
-              row="7"
-            >{{section.content}}
-            </textarea>
-          </li>
-        </ul>
-       </div>
-
-            <button class="btn" @click="saveGrant">
-              Save Grant
-            </button>
-
+       <div>
+        <div class="card text-center">
+          <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+              <li class="nav-item" v-for="section in grant.sections" >{{section.category}}
+                  <div class="card-body">
+                    <h5 class="card-title">{{ section.category }}</h5>
+                      <textarea 
+                        class="card-text" 
+                        v-model="section.content" 
+                        col="40" 
+                        row="7"
+                      >
+                      </textarea>
+                  </div>
+              </li>
+            </ul>
           </div>
-        </div>
-
         </div>
 
        </div>
@@ -43,6 +39,7 @@
           <button class="btn btn-info m-2" v-on:click="destroyGrant()">Delete</button>
           <router-link class="btn btn-danger" :to="'/grants/' + (1 + grant.id)" >Next</router-link>  
         </div>
+        
      </div> 
   </div>
 
@@ -125,9 +122,6 @@ methods: {
         console.log(response.data);
         this.currentSection.content = this.currentSection.content + this.currentBoilerplate.boilerplate_text;
       });
-  }
-  saveGrant: function() {
-     
   }
 },
 watch: {
