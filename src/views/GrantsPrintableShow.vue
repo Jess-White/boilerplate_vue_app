@@ -10,16 +10,19 @@
         <h4 class="text-center">Deadline: {{grant.deadline}}</h4>
         <h4 class="text-center">Date Submitted: {{grant.date_submitted}}</h4>
         <h4 class="text-center">Organization: {{grant.organization_id}}</h4>
+
+        <div>
+          <h4></h4>
+
+        </div>
        </div>
 
        <div>
         <div class="card text-center">
           <div class="card-header">
-            <ul class="list-group">
-              <li class="list-group-item" v-for="section in grant.sections" >{{section.category}}</li>
+            <ul class="nav nav-tabs card-header-tabs">
               <li class="nav-item" v-for="section in grant.sections" >{{section.category}}
                   <div class="card-body">
-                    <h5 class="card-title">{{ section.category }}</h5>
                       <textarea 
                         class="card-text" 
                         v-model="section.content" 
@@ -39,11 +42,13 @@
           <router-link class="btn btn-info m-2" v-bind:to="'/grants/' + grant.id + '/edit'">Edit</router-link>
           <button class="btn btn-info m-2" v-on:click="destroyGrant()">Delete</button>
           <router-link class="btn btn-danger" :to="'/grants/' + (1 + grant.id)" >Next</router-link>  
-          <router-link class="btn btn-info m-2" v-bind:to="'/grants/'">Save</router-link>
         </div>
-
+        
      </div> 
   </div>
+
+  {{grant.name}}
+  {{sections}}
 
 </template>
 

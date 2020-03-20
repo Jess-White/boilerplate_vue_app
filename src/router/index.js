@@ -17,6 +17,9 @@ import GrantsEdit from '../views/GrantsEdit.vue';
 import GrantsNew from '../views/GrantsNew.vue';
 import GrantsShow from '../views/GrantsShow.vue';
 
+import GrantsFinalizeShow from '../views/GrantsFinalizeShow.vue';
+import GrantsPrintableShow from '../views/GrantsPrintableShow.vue';
+
 import OrganizationsIndex from '../views/OrganizationsIndex.vue';
 import OrganizationsEdit from '../views/OrganizationsEdit.vue';
 import OrganizationsNew from '../views/OrganizationsNew.vue';
@@ -66,11 +69,16 @@ const routes = [
   {path: '/grants/:id', name: 'grants-show', component: GrantsShow},
   {path: '/grants/:id/edit', name: 'grants-edit', component: GrantsEdit},
 
+  {path: '/grants/:id', name: 'grants-show', component: GrantsFinalizeShow},
+  {path: '/grants/:id', name: 'grants-show', component: GrantsPrintableShow},
+
   {path: '/', name: 'root', component: OrganizationsIndex},
   {path: '/organizations', name: 'organizations-index', component: OrganizationsIndex},
   {path: '/organizations/new', name: 'organizations-new', component: OrganizationsNew},
   {path: '/organizations/:id', name: 'organizations-show', component: OrganizationsShow},
   {path: '/organizations/:id/edit', name: 'organizations-edit', component: OrganizationsEdit}
+
+
 ]
 
 const router = new VueRouter({
