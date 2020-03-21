@@ -3,9 +3,9 @@
     <h1 class="text-center mb-5">Grants</h1>
     <div class="row">
       <div class="col-sm-4 mb-2" v-for="grant in grants">
-      <router-link v-bind:to="'/grants/' + grant.id">
         <div class="card">
           <div class="card-body text-info">
+        <router-link v-bind:to="'/grants/' + grant.id">
             <h5 class="card-name">{{grant.name}}</h5>
                         <!-- need to add organization -->
             <p class="card-text">{{grant.purpose}}</p>
@@ -15,12 +15,16 @@
             <p class="card-text">{{grant.deadline}}</p>
             <p class="card-text">{{grant.date_submitted}}</p>
             <p class="card-text">{{grant.organization_id}}</p>
-            <p class="card-text" v-for="section in sections">{{grant.section}}</p>
+            <p class="card-text" v-for="section in grant.sections">{{section.category}}</p>
+        </router-link>
+
+            <router-link class="btn btn-info m-2" :to="'/grants/' + grant.id + '/finalize'">Finalize Grant</router-link>
+
+            <router-link class="btn btn-info m-2" :to="'/grants/' + grant.id + '/printable'">Printable Grant</router-link>
 
 <!--             need method for org id -->
           </div>
         </div>
-        </router-link>
       </div>
     </div>
   </div>
@@ -46,7 +50,9 @@
       this.grants = response.data;
     });
   },
-  methods: {}
+  methods: {
+
+  }
 };
 
 

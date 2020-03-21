@@ -19,6 +19,7 @@ import GrantsShow from '../views/GrantsShow.vue';
 
 import GrantsFinalizeShow from '../views/GrantsFinalizeShow.vue';
 import GrantsPrintableShow from '../views/GrantsPrintableShow.vue';
+import GrantsReuse from '../views/GrantsReuse.vue';
 
 import OrganizationsIndex from '../views/OrganizationsIndex.vue';
 import OrganizationsEdit from '../views/OrganizationsEdit.vue';
@@ -69,8 +70,10 @@ const routes = [
   {path: '/grants/:id', name: 'grants-show', component: GrantsShow},
   {path: '/grants/:id/edit', name: 'grants-edit', component: GrantsEdit},
 
-  {path: '/grants/:id', name: 'grants-show', component: GrantsFinalizeShow},
-  {path: '/grants/:id', name: 'grants-show', component: GrantsPrintableShow},
+  {path: '/grants/:id/finalize', name: 'grants-finalize-show', component: GrantsFinalizeShow},
+  {path: '/grants/:id/printable', name: 'grants-printable-show', component: GrantsPrintableShow},
+
+  {path: '/grants/:id/copy', name: 'grants-reuse', component: GrantsReuse},
 
   {path: '/', name: 'root', component: OrganizationsIndex},
   {path: '/organizations', name: 'organizations-index', component: OrganizationsIndex},

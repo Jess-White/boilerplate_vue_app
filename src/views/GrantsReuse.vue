@@ -15,50 +15,23 @@
        <div>
         <div class="card text-center">
           <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs">
-              <li class="nav-item" v-for="section in grant.sections" >
-                <span class="nav-link" :class="{active: section == currentSection}" @click="currentSection = section">{{ section.category }}</span>
+            <ul class="list-group">
+              <li class="list-group-item" v-for="section in grant.sections" >{{section.category}}</li>
+              <li class="nav-item" v-for="section in grant.sections" >{{section.category}}
+                  <div class="card-body">
+                    <h5 class="card-title">{{ section.category }}</h5>
+                      <textarea 
+                        class="card-text" 
+                        v-model="section.content" 
+                        col="40" 
+                        row="7"
+                      >
+                      </textarea>
+                  </div>
               </li>
             </ul>
           </div>
-          <div class="card-body">
-            <h5 class="card-title">{{ currentSection.category }}</h5>
-            <textarea 
-              class="card-text" 
-              v-on:input="currentSection.changed = true"  
-              v-model="currentSection.content" 
-              col="40" 
-              row="7"
-            >
-            </textarea>
-
-            <button class="btn" :class="{'btn-danger': currentSection.changed, 'btn-primary': !currentSection.changed}" @click="updateSection(currentSection)">
-              Update
-            </button>
-
-          </div>
         </div>
-
-          <div>
-            <h1 class="text-center mb-5">Choose a Boilerplate</h1>
-            
-            <div>
-              <select v-model="currentBoilerplate">
-                <option v-for="boilerplate in boilerplates" :value="boilerplate"> {{ boilerplate.name}} </option>
-                
-              </select>
-
-            </div>
-
-            <div class="row">
-              <div class="col-sm-4 mb-2">
-                {{ currentBoilerplate.boilerplate_text }}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button class="btn btn-info m-2" v-on:click="addBoilerplate(currentSection)">Add Boilerplate</button>
 
        </div>
 
@@ -66,15 +39,9 @@
           <router-link class="btn btn-info m-2" v-bind:to="'/grants/' + grant.id + '/edit'">Edit</router-link>
           <button class="btn btn-info m-2" v-on:click="destroyGrant()">Delete</button>
           <router-link class="btn btn-danger" :to="'/grants/' + (1 + grant.id)" >Next</router-link>  
-
+          <router-link class="btn btn-info m-2" v-bind:to="'/grants/'">Save</router-link>
         </div>
 
-        <div>
-          <button class="btn btn-info m-2" v-on:click="finalizeGrant">Finalize Grant</button>
-
-          <button class="btn btn-info m-2" v-on:click="printableGrant">Printable Grant</button>
-          
-        </div>
      </div> 
   </div>
 
@@ -133,6 +100,7 @@ methods: {
         this.$router.push("/");
       });
   },
+
   updateSection: function(inputSection) {
     var clientParams = { 
       content: inputSection.content
@@ -155,20 +123,6 @@ methods: {
       .then(response => {
         console.log(response.data);
         this.currentSection.content = this.currentSection.content + this.currentBoilerplate.boilerplate_text;
-      });
-  },
-  finalizeGrant: function() {
-    axios 
-      .get("/api/grants/" + this.$route.params.id)
-      .then(response => {
-        this.$router.push("/grants/" + this.$route.params.id + "/finalize");
-      });
-  },
-  printableGrant: function() {
-    axios 
-      .get("/api/grants/" + this.$route.params.id)
-      .then(response => {
-        this.$router.push("/grants/" + this.$route.params.id + "/printable");
       });
   }
 },

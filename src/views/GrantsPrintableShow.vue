@@ -1,7 +1,9 @@
 <template>
   <div class="grants-show">
+    <button class="btn" @click="createPDF">Create PDF</button>
 
      <div class="row">
+      <div id="printable">
        <div class="col-md-6">
         <h4 class="text-center">Grant Name: {{grant.name}}</h4>
         <h4 class="text-center">Purpose: {{grant.purpose}}</h4>
@@ -37,18 +39,22 @@
         </div>
 
        </div>
+     </div>
 
        <div>
           <router-link class="btn btn-info m-2" v-bind:to="'/grants/' + grant.id + '/edit'">Edit</router-link>
           <button class="btn btn-info m-2" v-on:click="destroyGrant()">Delete</button>
           <router-link class="btn btn-danger" :to="'/grants/' + (1 + grant.id)" >Next</router-link>  
+
+          <button class="btn btn-info m-2" v-on:click="finalizeGrant">Finalize Grant</button>
+
+          <button class="btn btn-info m-2" v-on:click="printableGrant">Printable Grant</button>
+
+          <button class="btn btn-info m-2" v-on:click="createPdf">Create PDF</button>
         </div>
         
      </div> 
   </div>
-
-  {{grant.name}}
-  {{sections}}
 
 </template>
 
@@ -59,6 +65,7 @@
 </style>
 
 <script>
+  import jsPDF from 'jspdf'
   var axios = require('axios');
 
   export default {
@@ -129,7 +136,27 @@ methods: {
         console.log(response.data);
         this.currentSection.content = this.currentSection.content + this.currentBoilerplate.boilerplate_text;
       });
-  }
+  },
+  finalizeGrant: function() {
+    axios 
+      .get("/api/grants/" + this.$route.params.id)
+      .then(response => {
+        this.$router.push("/grants/" + this.$route.params.id + "/finalize");
+      });
+  },
+  printableGrant: function() {
+    axios 
+      .get("/api/grants/" + this.$route.params.id)
+      .then(response => {
+        this.$router.push("/grants/" + this.$route.params.id + "/printable");
+      });
+  },
+  createPDF() {
+    var pdf = new jsPDF();
+      pdf.text('Hi!', 20, 20, {'width': 500});
+      // pdf.fromHTML(document.getElementById("printable"), 20, 20,{'width':500});
+      pdf.save('grant.pdf')
+        }
 },
 watch: {
   $route: function() {
@@ -142,3 +169,4 @@ watch: {
 }  
 };
 </script>
+
