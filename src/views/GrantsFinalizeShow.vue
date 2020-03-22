@@ -1,5 +1,5 @@
 <template>
-  <div class="grants-show">
+  <div class="grants-finalize-show">
 
      <div class="row">
        <div class="col-md-6">
@@ -44,6 +44,8 @@
           <button class="btn btn-info m-2" v-on:click="finalizeGrant">Finalize Grant</button>
 
           <button class="btn btn-info m-2" v-on:click="printableGrant">Printable Grant</button>
+
+          <button class="btn btn-info m-2" v-on:click="reuseGrant">Reuse Grant</button>
         </div>
 
      </div> 
@@ -144,6 +146,13 @@ printableGrant: function() {
     .then(response => {
       this.$router.push("/grants/" + this.$route.params.id + "/printable");
     });
+},
+  reuseGrant: function() {
+    axios 
+      .get("/api/grants/" + this.$route.params.id)
+      .then(response => {
+        this.$router.push("/grants/" + this.$route.params.id + "/reuse");
+      });
   }
 },
 watch: {

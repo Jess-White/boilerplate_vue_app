@@ -1,5 +1,5 @@
 <template>
-  <div class="grants-show">
+  <div class="grants-reuse">
 
      <div class="row">
        <div class="col-md-6">
@@ -40,6 +40,12 @@
           <button class="btn btn-info m-2" v-on:click="destroyGrant()">Delete</button>
           <router-link class="btn btn-danger" :to="'/grants/' + (1 + grant.id)" >Next</router-link>  
           <router-link class="btn btn-info m-2" v-bind:to="'/grants/'">Save</router-link>
+
+          <button class="btn btn-info m-2" v-on:click="finalizeGrant">Finalize Grant</button>
+
+          <button class="btn btn-info m-2" v-on:click="printableGrant">Printable Grant</button>
+
+          <button class="btn btn-info m-2" v-on:click="reuseGrant">Reuse Grant</button>
         </div>
 
      </div> 
@@ -123,6 +129,27 @@ methods: {
       .then(response => {
         console.log(response.data);
         this.currentSection.content = this.currentSection.content + this.currentBoilerplate.boilerplate_text;
+      });
+  },
+  finalizeGrant: function() {
+    axios 
+      .get("/api/grants/" + this.$route.params.id)
+      .then(response => {
+        this.$router.push("/grants/" + this.$route.params.id + "/finalize");
+      });
+  },
+  printableGrant: function() {
+    axios 
+      .get("/api/grants/" + this.$route.params.id)
+      .then(response => {
+        this.$router.push("/grants/" + this.$route.params.id + "/printable");
+      });
+  },
+  reuseGrant: function() {
+    axios 
+      .get("/api/grants/" + this.$route.params.id)
+      .then(response => {
+        this.$router.push("/grants/" + this.$route.params.id + "/reuse");
       });
   }
 },

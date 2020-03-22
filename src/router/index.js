@@ -73,7 +73,7 @@ const routes = [
   {path: '/grants/:id/finalize', name: 'grants-finalize-show', component: GrantsFinalizeShow},
   {path: '/grants/:id/printable', name: 'grants-printable-show', component: GrantsPrintableShow},
 
-  {path: '/grants/:id/copy', name: 'grants-reuse', component: GrantsReuse},
+  {path: '/grants/:id/reuse', name: 'grants-reuse', component: GrantsReuse},
 
   {path: '/', name: 'root', component: OrganizationsIndex},
   {path: '/organizations', name: 'organizations-index', component: OrganizationsIndex},

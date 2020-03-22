@@ -1,60 +1,84 @@
 <template>
   <div class="grants-show">
-    <button class="btn" @click="createPDF">Create PDF</button>
 
-     <div class="row">
-      <div id="printable">
-       <div class="col-md-6">
-        <h4 class="text-center">Grant Name: {{grant.name}}</h4>
-        <h4 class="text-center">Purpose: {{grant.purpose}}</h4>
-        <h4 class="text-center">Funding Organization: {{grant.funding_org}}</h4>
-        <h4 class="text-center">Funding Organization RFP Webpage: {{grant.funding_org_rfp_webpage}}</h4>        
-        <h4 class="text-center">Deadline: {{grant.deadline}}</h4>
-        <h4 class="text-center">Date Submitted: {{grant.date_submitted}}</h4>
-        <h4 class="text-center">Organization: {{grant.organization_id}}</h4>
+       <div class="row">
+         <div class="col-md-6">
+          <h4 class="text-center">Grant Name: {{grant.name}}</h4>
+          <h4 class="text-center">Purpose: {{grant.purpose}}</h4>
+          <h4 class="text-center">Funding Organization: {{grant.funding_org}}</h4>
+          <h4 class="text-center">Funding Organization RFP Webpage: {{grant.funding_org_rfp_webpage}}</h4>        
+          <h4 class="text-center">Deadline: {{grant.deadline}}</h4>
+          <h4 class="text-center">Date Submitted: {{grant.date_submitted}}</h4>
+          <h4 class="text-center">Organization: {{grant.organization_id}}</h4>
+         </div>
 
-        <div>
-          <h4></h4>
+         <div>
+          <div class="card text-center">
+            <div class="card-header">
+              <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item" v-for="section in grant.sections" >
+                  <span class="nav-link" :class="{active: section == currentSection}" @click="currentSection = section">{{ section.category }}</span>
+                </li>
+              </ul>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{ currentSection.category }}</h5>
+              <textarea 
+                class="card-text" 
+                v-on:input="currentSection.changed = true"  
+                v-model="currentSection.content" 
+                col="40" 
+                row="7"
+              >
+              </textarea>
 
-        </div>
-       </div>
+              <button class="btn" :class="{'btn-danger': currentSection.changed, 'btn-primary': !currentSection.changed}" @click="updateSection(currentSection)">
+                Update
+              </button>
 
-       <div>
-        <div class="card text-center">
-          <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs">
-              <li class="nav-item" v-for="section in grant.sections" >{{section.category}}
-                  <div class="card-body">
-                      <textarea 
-                        class="card-text" 
-                        v-model="section.content" 
-                        col="40" 
-                        row="7"
-                      >
-                      </textarea>
-                  </div>
-              </li>
-            </ul>
+            </div>
           </div>
-        </div>
 
-       </div>
-     </div>
+            <div>
+              <h1 class="text-center mb-5">Choose a Boilerplate</h1>
+              
+              <div>
+                <select v-model="currentBoilerplate">
+                  <option v-for="boilerplate in boilerplates" :value="boilerplate"> {{ boilerplate.name}} </option>
+                  
+                </select>
 
-       <div>
-          <router-link class="btn btn-info m-2" v-bind:to="'/grants/' + grant.id + '/edit'">Edit</router-link>
-          <button class="btn btn-info m-2" v-on:click="destroyGrant()">Delete</button>
-          <router-link class="btn btn-danger" :to="'/grants/' + (1 + grant.id)" >Next</router-link>  
+              </div>
 
-          <button class="btn btn-info m-2" v-on:click="finalizeGrant">Finalize Grant</button>
+              <div class="row">
+                <div class="col-sm-4 mb-2">
+                  {{ currentBoilerplate.boilerplate_text }}
+                </div>
+              </div>
+            </div>
+          </div>
 
-          <button class="btn btn-info m-2" v-on:click="printableGrant">Printable Grant</button>
+          <button class="btn btn-info m-2" v-on:click="addBoilerplate(currentSection)">Add Boilerplate</button>
 
-          <button class="btn btn-info m-2" v-on:click="createPdf">Create PDF</button>
-        </div>
-        
-     </div> 
-  </div>
+         </div>
+
+         <div>
+            <router-link class="btn btn-info m-2" v-bind:to="'/grants/' + grant.id + '/edit'">Edit</router-link>
+            <button class="btn btn-info m-2" v-on:click="destroyGrant()">Delete</button>
+            <router-link class="btn btn-danger" :to="'/grants/' + (1 + grant.id)" >Next</router-link>  
+
+          </div>
+
+          <div>
+            <button class="btn btn-info m-2" v-on:click="finalizeGrant">Finalize Grant</button>
+
+            <button class="btn btn-info m-2" v-on:click="printableGrant">Printable Grant</button>
+
+            <button class="btn btn-info m-2" v-on:click="reuseGrant">Reuse Grant</button>
+            
+          </div>
+       </div> 
+    </div>
 
 </template>
 
@@ -112,7 +136,6 @@ methods: {
         this.$router.push("/");
       });
   },
-
   updateSection: function(inputSection) {
     var clientParams = { 
       content: inputSection.content
@@ -151,14 +174,20 @@ methods: {
         this.$router.push("/grants/" + this.$route.params.id + "/printable");
       });
   },
-  createPDF() {
-    var pdf = new jsPDF();
-      pdf.text('Hi!', 20, 20, {'width': 500});
-      // pdf.fromHTML(document.getElementById("printable"), 20, 20,{'width':500});
-      pdf.save('grant.pdf')
-        }
+  // createPDF: function() {
+  //   var pdfData = $('#content').html();
+  //   var doc = new jsPDF();
+  //     doc.fromHTML('pdfData', 20, 20, {'width': 500});
+  //     doc.save('grant.pdf');
+  // }
+  createPDF: function() {
+    var doc = new jsPDF();
+      doc.fromHTML($('#content').html(), 20, 20, {'width': 500});
+      // "elementHandlers": specialElementHandlers
+      doc.save('grant.pdf');
+  }
 },
-watch: {
+watch:  {
   $route: function() {
     axios
     .get("/api/grants/" + this.$route.params.id)
@@ -166,7 +195,8 @@ watch: {
       this.grant = response.data;
     });
   }
-}  
+}
 };
+
 </script>
 
