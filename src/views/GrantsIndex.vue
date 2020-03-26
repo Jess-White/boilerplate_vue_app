@@ -1,15 +1,35 @@
 <template>
   <div class="grants-index">
 
-      <h1 class="text-center mb-5">Grants</h1>
-
+    <div class="pt100 pb50 bg-dark">
+        <div class="container">
+            <div class="row align-items-center">
+            <div class="col-lg-8 mr-auto pb50 ml-auto">
+                <h2 class="h1 font300 text-white">
+                    Use This Library to View and Edit <span class="text-primary">Saved</span> Grants.
+                </h2>
+                <p class="lead text-white-gray">
+                    Click on any tile to open a saved grant, view and edit all sections, create pdfs, and reuse grant materials. 
+                </p>
+                <div class="experience-card clearfix">
+                    <div class="experience-inner">
+                        <h3 class="experience-text">02</h3>
+                    </div> 
+                    <h4>Saved Grants</h4>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="container">
+      
+      <h1 class="text-center my-5">Grants</h1>
       <div class="row">
         <div class="col-sm-4 mb-2" v-for="grant in grants">
-        <router-link v-bind:to="'/grants/' + grant.id">
+        <router-link v-bind:to="'/grants/' + grant.id + '/finalize'">
           <div class="card">
             <div class="card-body text-info">
               <h5 class="card-name">{{grant.name}}</h5>
-                          <!-- need to add organization -->
               <p class="card-text">{{grant.title}}</p>
               <p class="card-text">{{grant.purpose}}</p>
               <p class="card-text">{{grant.funding_org}}</p>
@@ -23,54 +43,9 @@
           </router-link>
         </div>
       </div>
+    </div>
 
-       <div>
-
-        <div class="card text-center">
-          <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs">
-              <li class="nav-item" v-for="section in grant.sections" >
-                <span class="nav-link" :class="{active: section == currentSection}" @click="currentSection = section">{{ section.category }}</span>
-              </li>
-            </ul>
-          </div>
-
-          <div class="card-body">
-            <h5 class="card-title">{{ currentSection.category }}</h5>
-            <textarea 
-              class="card-text" 
-              v-on:input="currentSection.changed = true"  
-              v-model="currentSection.content" 
-              col="40" 
-              row="7"
-            >
-            </textarea>
-
-            <button class="btn" :class="{'btn-danger': currentSection.changed, 'btn-primary': !currentSection.changed}" @click="updateSection(currentSection)">
-              Update
-            </button>
-          </div>
-
-        </div>
-
-       </div>
-
-       <div>
-          <router-link class="btn btn-info m-2" v-bind:to="'/grants/' + grant.id + '/edit'">Edit</router-link>
-          <button class="btn btn-info m-2" v-on:click="destroyGrant()">Delete</button>
-          <router-link class="btn btn-danger" :to="'/grants/' + (1 + grant.id)" >Next</router-link>  
-
-        </div>
-
-        <div>
-          <button class="btn btn-info m-2" v-on:click="finalizeGrant">Finalize Grant</button>
-
-          <button class="btn btn-info m-2" v-on:click="printableGrant">Printable Grant</button>
-
-          <button class="btn btn-info m-2" v-on:click="reuseGrant">Reuse Grant</button>
-          
-        </div>
-     </div> 
+   </div> 
 
 </template>
 

@@ -33,30 +33,11 @@ import UsersNew from '../views/UsersNew.vue';
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
 
   {path: '/users/new', name: 'users-new', component: UsersNew},
 
   {path: '/login', name: 'login', component: Login},
   {path: '/logout', name: 'logout', component: Logout},
-
-  {path: '/', name: 'root', component: BiosIndex},
-  {path: '/bios', name: 'bios-index', component: BiosIndex},
-  {path: '/bios/new', name: 'bios-new', component: BiosNew},
-  {path: '/bios/:id', name: 'bios-show', component: BiosShow},
-  {path: '/bios/:id/edit', name: 'bios-edit', component: BiosEdit},
 
   {path: '/', name: 'root', component: BoilerplatesIndex},
   {path: '/boilerplates', name: 'boilerplates-index', component: BoilerplatesIndex},
@@ -64,7 +45,11 @@ const routes = [
   {path: '/boilerplates/:id', name: 'boilerplates-show', component: BoilerplatesShow},
   {path: '/boilerplates/:id/edit', name: 'boilerplates-edit', component: BoilerplatesEdit},
 
-  {path: '/', name: 'root', component: GrantsIndex},
+  {path: '/bios', name: 'bios-index', component: BiosIndex},
+  {path: '/bios/new', name: 'bios-new', component: BiosNew},
+  {path: '/bios/:id', name: 'bios-show', component: BiosShow},
+  {path: '/bios/:id/edit', name: 'bios-edit', component: BiosEdit},
+
   {path: '/grants', name: 'grants-index', component: GrantsIndex},
   {path: '/grants/new', name: 'grants-new', component: GrantsNew},
   {path: '/grants/:id', name: 'grants-show', component: GrantsShow},
@@ -73,9 +58,6 @@ const routes = [
   {path: '/grants/:id/finalize', name: 'grants-finalize-show', component: GrantsFinalizeShow},
   {path: '/grants/:id/printable', name: 'grants-printable-show', component: GrantsPrintableShow},
 
-  {path: '/grants/:id/reuse', name: 'grants-reuse', component: GrantsReuse},
-
-  {path: '/', name: 'root', component: OrganizationsIndex},
   {path: '/organizations', name: 'organizations-index', component: OrganizationsIndex},
   {path: '/organizations/new', name: 'organizations-new', component: OrganizationsNew},
   {path: '/organizations/:id', name: 'organizations-show', component: OrganizationsShow},

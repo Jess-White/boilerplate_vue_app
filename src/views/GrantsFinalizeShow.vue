@@ -1,8 +1,32 @@
 <template>
   <div class="grants-finalize-show">
+    
 
-     <div class="row">
-       <div class="col-md-6">
+    <div class="pt100 pb50 bg-dark">
+        <div class="container">
+            <div class="row align-items-center">
+            <div class="col-lg-8 mr-auto pb50 ml-auto">
+                <h2 class="h1 font300 text-white">
+                    Use This Section to <span class="text-primary">Finalize</span> Your Grant.
+                </h2>
+                <p class="lead text-white-gray">
+                    Review and edit all sections; save your finished grant, review a printable version, or create a pdf. 
+                </p>
+                <div class="experience-card clearfix">
+                    <div class="experience-inner">
+                        <h3 class="experience-text">01c</h3>
+                    </div> 
+                    <h4>Grant Builder: Review and Finalize Your Grant.</h4>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="container my-4" >
+
+     <div class="row" id="pdfMaterials">
+       <div class="col-md-6 offset-md-3">
         <h4 class="text-center">Grant Name: {{grant.name}}</h4>
         <h4 class="text-center">Purpose: {{grant.purpose}}</h4>
         <h4 class="text-center">Funding Organization: {{grant.funding_org}}</h4>
@@ -11,25 +35,26 @@
         <h4 class="text-center">Date Submitted: {{grant.date_submitted}}</h4>
         <h4 class="text-center">Organization: {{grant.organization_id}}</h4>
        </div>
-
+     </div>
+     <div>
        <div>
         <div class="card text-center">
           <div class="card-header">
-            <ul class="list-group">
-              <li class="list-group-item" v-for="section in grant.sections" >{{section.category}}</li>
-              <li class="nav-item" v-for="section in grant.sections" >{{section.category}}
+              <div class="nav-item" v-for="section in grant.sections" >
                   <div class="card-body">
-                    <h5 class="card-title">{{ section.category }}</h5>
+                    <h5 class="card-title">{{ section.display_category }}</h5>
+                    <div class="form-group">
                       <textarea 
-                        class="card-text" 
+                        class="form-control" 
                         v-model="section.content" 
-                        col="40" 
-                        row="7"
+                        
+                        rows="7"
                       >
                       </textarea>
+                    </div>
+                    <button class="btn btn-info m-2" v-on:click="updateSection(section)">Save Section</button>
                   </div>
-              </li>
-            </ul>
+              </div>
           </div>
         </div>
 
@@ -37,17 +62,17 @@
 
        <div>
           <router-link class="btn btn-info m-2" v-bind:to="'/grants/' + grant.id + '/edit'">Edit</router-link>
+
           <button class="btn btn-info m-2" v-on:click="destroyGrant()">Delete</button>
-          <router-link class="btn btn-danger" :to="'/grants/' + (1 + grant.id)" >Next</router-link>  
-          <router-link class="btn btn-info m-2" v-bind:to="'/grants/'">Save</router-link>
 
-          <button class="btn btn-info m-2" v-on:click="finalizeGrant">Finalize Grant</button>
+          <button class="btn btn-info m-2" v-on:click="updateAllSections()">Save Grant</button>
 
-          <button class="btn btn-info m-2" v-on:click="printableGrant">Printable Grant</button>
+          <router-link class="btn btn-info m-2" v-bind:to="'/grants/' + grant.id + '/printable'">Printable Grant</router-link>
 
-          <button class="btn btn-info m-2" v-on:click="reuseGrant">Reuse Grant</button>
+          <button class="btn btn-info m-2" v-on:click="reuseGrant()">Reuse Grant</button>
         </div>
 
+      </div>
      </div> 
   </div>
 
@@ -61,6 +86,7 @@
 
 <script>
   var axios = require('axios');
+  import jsPDF from 'jspdf'
 
   export default {
     data: function() {
@@ -80,7 +106,6 @@
           errors: [],
           sections: []
         },
-        currentSection: {text: ""},
         currentBoilerplate: {},
         boilerplates: []
   };
@@ -112,12 +137,19 @@ methods: {
     };
 
     axios
-      .patch("/api/sections/" + inputSection.id, clientParams)
-      .then(response => {
-        console.log(response.data);
-        this.currentSection.changed = false;
-      });
-    },
+    .patch("/api/sections/" + inputSection.id, clientParams)
+    .then(response => {
+      console.log(response.data);
+    });
+  },
+
+  updateAllSections: function() {
+    this.grant.sections.forEach(section => {
+      this.updateSection(section);
+    });
+
+    this.$router.push("/grants"); 
+  },
 
   addBoilerplate: function(inputSection) {
     var clientParams = {
@@ -132,28 +164,30 @@ methods: {
       });
     },
 
-finalizeGrant: function() {
-  axios 
-    .get("/api/grants/" + this.$route.params.id)
-    .then(response => {
-      this.$router.push("/grants/" + this.$route.params.id + "/finalize");
-    });
-},
-
-printableGrant: function() {
-  axios 
-    .get("/api/grants/" + this.$route.params.id)
-    .then(response => {
-      this.$router.push("/grants/" + this.$route.params.id + "/printable");
-    });
-},
-  reuseGrant: function() {
+  finalizeGrant: function() {
     axios 
       .get("/api/grants/" + this.$route.params.id)
       .then(response => {
-        this.$router.push("/grants/" + this.$route.params.id + "/reuse");
+        this.$router.push("/grants/" + this.$route.params.id + "/finalize");
       });
-  }
+  },
+  reuseGrant: function() {
+      axios 
+        .get("/api/grants/" + this.$route.params.id + "/copy")
+        .then(response => {
+          this.$router.push("/grants/" + response.data.id + "/finalize");
+
+        })
+        .catch(error => {
+                  console.log(error.response.data.
+                    errors);
+                  console.log(this.status = error.response.status);});
+    },
+    createPDF: function() {
+      var doc = new jsPDF();
+      doc.fromHTML(document.getElementById('pdfMaterials'), 20, 20);
+      doc.save('grant.pdf');
+    },
 },
 watch: {
   $route: function() {

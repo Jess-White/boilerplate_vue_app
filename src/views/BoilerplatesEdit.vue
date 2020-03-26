@@ -1,5 +1,27 @@
 <template>
   <div class="boilerplates-edit">
+
+    <div class="pt100 pb50 bg-dark">
+        <div class="container">
+            <div class="row align-items-center">
+            <div class="col-lg-8 mr-auto pb50 ml-auto">
+                <h2 class="h1 font300 text-white">
+                    Use This Page to Edit Saved <span class="text-primary">Boilerplates</span>.
+                </h2>
+                <p class="lead text-white-gray">
+                    Edit and update saved boilerplates.
+                </p>
+                <div class="experience-card clearfix">
+                    <div class="experience-inner">
+                        <h3 class="experience-text">03c</h3>
+                    </div> 
+                    <h4>Years of Experience</h4>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    
     <div class="row">
       <form class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1" v-on:submit.prevent="updateBoilerplate()">
         <h1 class="text-center mb-5">Edit Boilerplate</h1>
@@ -14,12 +36,14 @@
 
         <div class="form-group">
           <label>Boilerplate Text: </label>
-          <input class="form-control" type="text" v-model="boilerplate.boilerplateText">
+          <input class="form-control" type="text" v-model="boilerplate.boilerplate_text">
         </div>
 
 <!--         need method for user id and category id -->
 
       </form>
+
+      <button v-on:click="updateBoilerplate()">Save Boilerplate</button>
     </div>
   </div>
 

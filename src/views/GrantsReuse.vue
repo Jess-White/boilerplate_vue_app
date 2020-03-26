@@ -38,7 +38,6 @@
        <div>
           <router-link class="btn btn-info m-2" v-bind:to="'/grants/' + grant.id + '/edit'">Edit</router-link>
           <button class="btn btn-info m-2" v-on:click="destroyGrant()">Delete</button>
-          <router-link class="btn btn-danger" :to="'/grants/' + (1 + grant.id)" >Next</router-link>  
           <router-link class="btn btn-info m-2" v-bind:to="'/grants/'">Save</router-link>
 
           <button class="btn btn-info m-2" v-on:click="finalizeGrant">Finalize Grant</button>
@@ -147,9 +146,10 @@ methods: {
   },
   reuseGrant: function() {
     axios 
-      .get("/api/grants/" + this.$route.params.id)
+      .post("/api/grants/" + this.$route.params.id + "/copy")
       .then(response => {
-        this.$router.push("/grants/" + this.$route.params.id + "/reuse");
+        console.log(response);
+        // this.$router.push("/grants/" + this.$route.params.id + "/copy");
       });
   }
 },
