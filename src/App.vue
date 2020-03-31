@@ -31,19 +31,19 @@
                                 <!-- <li><router-link to="/">Home</router-link></li> -->
                                 <!-- <li><router-link to="/about">About</router-link></li> -->
 
-                                <li><router-link to="/grants/new">New Grant</router-link></li>
-                                <li><router-link to="/grants">Grants Library</router-link></li>
+                                <li><router-link to="/grants/new">Add Grant</router-link></li>
+                                <li><router-link to="/grants">View All Grants</router-link></li>
 
-                                <li><router-link to="/boilerplates/new">New Boilerplate</router-link></li>
-                                <li><router-link to="/boilerplates">Boilerplates Library</router-link></li>
+                                <li><router-link to="/boilerplates/new">Add Boilerplate</router-link></li>
+                                <li><router-link to="/boilerplates">View All Boilerplates</router-link></li>
 
-                                <li><router-link to="/bios/new">New Bio</router-link></li>
-                                <li><router-link to="/bios">Bios Library</router-link></li>
+                                <li><router-link to="/bios/new">Add Bio</router-link></li>
+                                <li><router-link to="/bios">View All Bios</router-link></li>
 
-                                <li><router-link to="/organizations/new">New Organization</router-link></li>
-                                <li><router-link to="/organizations">Organizations Library</router-link></li>
+                                <li><router-link to="/organizations/new">Add Organization</router-link></li>
+                                <li><router-link to="/organizations">View All Organizations</router-link></li>
 
-                                <li><router-link to="/users/new">New User</router-link></li>
+                                <li><router-link to="/users/new">Add User</router-link></li>
                                 <li><router-link to="/logout">Logout</router-link></li>
                                 <li><router-link to="/login">Login</router-link></li>
                             </ul>
