@@ -56,6 +56,11 @@
           <button class="btn btn-info m-2" v-on:click="createPDF()">Create PDF</button>
         </div>
 
+        <div>
+
+          <button class="btn btn-info m-2" v-on:click="createPDFTwo()">Create Demo PDF</button>
+        </div>
+
       </div>
      </div> 
   </div>
@@ -171,6 +176,13 @@ methods: {
       var doc = new jsPDF();
       doc.fromHTML(document.getElementById('pdfMaterials'), 20, 20);
       doc.setFontSize(40);
+      doc.save('grant.pdf');
+    },
+
+    createPDFTwo: function() {
+      var doc = new jsPDF();
+      doc.text("Hi Laura, I made you a pdf", 20, 20);
+      doc.setFontSize(50);
       doc.save('grant.pdf');
     },
 

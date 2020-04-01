@@ -40,6 +40,12 @@
           <label>Email:</label>
           <input type="email" class="form-control" v-model="email">
         </div>
+
+        <div class="form-group">
+          <label>Organization:</label>
+          <input type="organization_id" class="form-control" v-model="organization_id">
+        </div>
+
         <div class="form-group">
           <label>Password:</label>
           <input type="password" class="form-control" v-model="password">
@@ -63,6 +69,7 @@ export default {
       firstName: "",
       lastName: "",
       email: "",
+      organization_id: "",
       password: "",
       passwordConfirmation: "",
       errors: []
@@ -74,6 +81,7 @@ export default {
         first_name: this.firstName,
         last_name: this.lastName,
         email: this.email,
+        organization_id: this.organization_id,
         password: this.password,
         password_confirmation: this.passwordConfirmation
       };

@@ -39,7 +39,8 @@ const routes = [
   {path: '/login', name: 'login', component: Login},
   {path: '/logout', name: 'logout', component: Logout},
 
-  {path: '/', name: 'root', component: BoilerplatesIndex},
+  {path: '/', name: 'root', component: GrantsIndex},
+  
   {path: '/boilerplates', name: 'boilerplates-index', component: BoilerplatesIndex},
   {path: '/boilerplates/new', name: 'boilerplates-new', component: BoilerplatesNew},
   {path: '/boilerplates/:id', name: 'boilerplates-show', component: BoilerplatesShow},
