@@ -131,11 +131,15 @@ var axios = require('axios')
       };
     },
     created: function() {
-      var email = localStorage.getItem("userEmail");
+      const email = localStorage.getItem("userEmail");
       if (email) {
         this.userEmail = email;
       }
-
+      const jwt = localStorage.getItem("jwt");
+      if (jwt) {
+        axios.defaults.headers.common["Authorization"] = "Bearer " + jwt;
+      }
+      console.log(axios.defaults.headers)
       // axios
       // .get("/api/bios")
       // .then(response => {

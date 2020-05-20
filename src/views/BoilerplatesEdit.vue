@@ -15,7 +15,7 @@
                     <div class="experience-inner">
                         <h3 class="experience-text">03c</h3>
                     </div> 
-                    <h4>Years of Experience</h4>
+                    <h4>Edit Boilerplates</h4>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
 
       </form>
 
-      <button v-on:click="updateBoilerplate()">Save Boilerplate</button>
+      <button v-on:click="updateBoilerplate()">Save Boilerplate Edits</button>
     </div>
   </div>
 
@@ -83,12 +83,15 @@ export default {
         user_id: this.boilerplate.userId,
         boilerplate: this.boilerplate.categoryId
       };
-
+      
     axios
     .patch("/api/boilerplates/" + this.$route.params.id, clientParams)
     .then(response => {
-      this.$router.push("/boilerplates/" + this.$route.params.id);
+      this.$router.push("/boilerplates/");
     }).catch(error => {
+      if (error.response.status === 401) {
+        this.$router.push("/login/");
+      }
       this.errors = error.response.data.errors;
     });
     }

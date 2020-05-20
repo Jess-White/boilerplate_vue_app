@@ -94,11 +94,19 @@ export default {
         
       };
 
+    const jwt = localStorage.getItem("jwt")
     axios
-    .patch("/api/bios/" + this.$route.params.id, clientParams)
+    .patch("/api/bios/" + this.$route.params.id, clientParams, {
+      headers: {
+        "Authorization": `Bearer ${jwt}`
+      }
+    })
     .then(response => {
       this.$router.push("/bios/" + this.$route.params.id);
     }).catch(error => {
+      if (error.response.status === 401) {
+        this.$router.push("/login");
+      }
       this.errors = error.response.data.errors;
     });
     }

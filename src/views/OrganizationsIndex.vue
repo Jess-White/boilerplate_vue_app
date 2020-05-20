@@ -9,7 +9,7 @@
                     Use This Library to View and Edit <span class="text-primary">Saved</span> Organizations.
                 </h2>
                 <p class="lead text-white-gray">
-                    Click on any tile to open a saved organizaton, view, and edit.
+                    Click on any tile to open a saved organization, view, and edit.
                 </p>
                 <div class="experience-card clearfix">
                     <div class="experience-inner">
@@ -63,9 +63,3 @@
 
 
 </script>
-
-<!--   create_table "organizations", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end -->

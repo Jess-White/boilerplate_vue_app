@@ -63,10 +63,18 @@
     },
   created: function() {
     axios
-    .get("/api/grants")
-    .then(response => {
-      this.grants = response.data;
-    });
+      .get("/api/grants")
+      .then(response => {
+        this.grants = response.data;
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          this.$router.push("/login/");
+        };
+        if (error.response.status === 500) {
+          alert("server error")
+        }
+      });
   },
   methods: {
       destroyGrant: function() {

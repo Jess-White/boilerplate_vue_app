@@ -6,10 +6,10 @@
             <div class="row align-items-center">
             <div class="col-lg-8 mr-auto pb50 ml-auto">
                 <h2 class="h1 font300 text-white">
-                    We're a small <span class="text-primary">Archi</span>tecture Studio.
+                    View Saved Staff<span class="text-primary">Bios</span>for Your Organization.
                 </h2>
                 <p class="lead text-white-gray">
-                    There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour
+                    View a library of saved staff bios.
                 </p>
                 <div class="experience-card clearfix">
                     <div class="experience-inner">

@@ -73,7 +73,7 @@ export default {
       axios
         .delete("/api/organizations/" + this.$route.params.id)
         .then(response => {
-          this.$router.push("/api/organizations/");
+          this.$router.push("/organizations/");
         });
     },
     updateOrganization: function() {
@@ -81,12 +81,19 @@ export default {
         name: this.organization.name
       };
 
-
+    const jwt = localStorage.getItem("jwt")
     axios
-    .patch("/api/organizations/" + this.$route.params.id, clientParams)
+    .patch("/api/organizations/" + this.$route.params.id, clientParams, {
+      headers: {
+        "Authorization": `Bearer ${jwt}`
+      }
+    })
     .then(response => {
-      this.$router.push("/organizations/" + this.$route.params.id);
+      this.$router.push("/organizations/");
     }).catch(error => {
+      if (error.response.status === 401) {
+        this.$router.push("/login/");
+      }
       this.errors = error.response.data.errors;
     });
     }

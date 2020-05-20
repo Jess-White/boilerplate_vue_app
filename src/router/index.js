@@ -34,9 +34,11 @@ Vue.use(VueRouter)
 
 const routes = [
 
+  
   {path: '/users/new', name: 'users-new', component: UsersNew},
 
   {path: '/login', name: 'login', component: Login},
+  
   {path: '/logout', name: 'logout', component: Logout},
 
   {path: '/', name: 'root', component: GrantsIndex},
@@ -63,8 +65,6 @@ const routes = [
   {path: '/organizations/new', name: 'organizations-new', component: OrganizationsNew},
   {path: '/organizations/:id', name: 'organizations-show', component: OrganizationsShow},
   {path: '/organizations/:id/edit', name: 'organizations-edit', component: OrganizationsEdit}
-
-
 ]
 
 const router = new VueRouter({
@@ -73,4 +73,17 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.name === 'login' || to.name === 'users-new') {
+    return next() 
+  };
+  const jwt = localStorage.getItem("jwt")
+  if (jwt) {
+    return next()
+  }
+  next("/login/");
+});
+
 export default router
+
+

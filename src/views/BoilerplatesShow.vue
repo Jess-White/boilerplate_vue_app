@@ -72,7 +72,7 @@ methods: {
     axios
       .delete("/api/boilerplates/" + this.$route.params.id)
       .then(response => {
-        this.$router.push("/");
+        this.$router.push("/boilerplates");
       });
   }
 },

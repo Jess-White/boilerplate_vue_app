@@ -125,11 +125,19 @@ export default {
         organization_id: this.grant.organizationId
       };
 
+    const jwt = localStorage.getItem("jwt")
     axios
-    .patch("/api/grants/" + this.$route.params.id, clientParams)
+    .patch("/api/grants/" + this.$route.params.id, clientParams, {
+      headers: {
+        "Authorization": `Bearer ${jwt}`
+      }
+    })
     .then(response => {
-      this.$router.push("/grants/" + this.$route.params.id);
+      this.$router.push("/grants/");
     }).catch(error => {
+      if (error.response.status === 401) {
+        this.$router.push("/login/");
+      }
       this.errors = error.response.data.errors;
     });
     }

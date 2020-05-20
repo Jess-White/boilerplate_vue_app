@@ -36,7 +36,7 @@ export default {
     this.$parent.userEmail = '';
     localStorage.removeItem("jwt");
 
-    this.$router.push("/");
+    this.$router.push("/login");
   }
 };
 </script>
